@@ -22,7 +22,6 @@
         "scss/styles.scss"
       ],
       "scripts": [
-        "../List_Country_State-master/countries.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
