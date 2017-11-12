@@ -3,6 +3,7 @@
     <div class="top-container">
       <div class="country-name">
         <mat-card-title>{{selectedOrder.client.country.name}}</mat-card-title>
+        <mat-card-subtitle class="leader">Attn: {{ selectedOrder.client.currentLeader }}</mat-card-subtitle>
       </div>
       <div class="flex-spacer"></div>
       <div class="country-flag">
@@ -20,7 +21,6 @@
     <mat-divider></mat-divider>
     <h3>Total: {{ orderCalcService.getOrderTotal(selectedOrder) | currency}}</h3>
     
-    <h4 class="leader">Attn: {{ selectedOrder.client.currentLeader }}</h4>
     
   </mat-card-content>
 </mat-card>
