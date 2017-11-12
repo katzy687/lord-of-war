@@ -1,0 +1,63 @@
+.mat-grid-tile {
+  cursor: pointer;
+}
+
+.mat-card {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.top-container {
+  display: flex;
+  width: 100%;
+  height: 40%;
+  .mat-card-title {
+    font-size: 1.5rem;
+  }
+  .country-flag {
+    margin: 1rem 1rem 0 0;
+    width: 50%;
+    img {
+      width: 100%;
+      max-height: 90%;
+    }
+  }
+}
+
+
+
+.country-name {
+  padding: 1rem;
+}
+
+.info-container {
+  padding: 1rem;
+}
+
+.mat-card-subtitle {
+  margin:0;
+}
+
+.mat-card-content {
+  height: 100%;
+}
+
+.current-leader {
+  margin-bottom: 10px;
+}
+
+.edit-buttons {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  .mat-icon {
+    margin: 0.2rem;
+    cursor: pointer;
+    &:hover {
+      background: lightgray;
+    }
+  }
+
+
+}

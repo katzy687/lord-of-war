@@ -1,0 +1,78 @@
+<div class="filter-container">
+  <button mat-button *ngFor="let btn of controlBtns; let i=index"
+          (click)="setActiveBtn(i); setPaidFilter(i)"
+          [ngClass]="{'active-btn' : activeBtn === 'btn' + i}"        
+          >
+    {{ btn }}
+  </button>
+  <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Filter By Client" aria-label="Number" 
+              matInput 
+              [formControl]="myControl" 
+              [matAutocomplete]="auto"
+              [(ngModel)]="filterValue"
+              >
+        <button mat-button *ngIf="filterValue.length > 0" matSuffix mat-icon-button aria-label="Clear" 
+                (click)="filterValue=''">
+            <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let client of clients" 
+                      [value]="client.country.name"
+                     >
+            {{ client.country.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+</div>
+
+  <div class="orders-container">
+      <div class="mat-list-container">
+        <div class="mat-card-wrapper"
+             *ngFor="let order of orders; let i = index">
+          <mat-card class="order-card"
+                     *ngIf="filterPaidStatus(i) && filterByCountry(i)">
+            <mat-card-content>
+              <mat-icon>folder</mat-icon>
+              <div class="order-info">
+                <h2 matTooltip="{{orderCalcService.showTooltip(order.client.country.name, 15)}}" 
+                    matTooltipPosition="right">
+                  #{{ i + 1 }} {{order.client.country.name | truncate: [15, '..'] }} 
+      
+                </h2>
+                <p>
+                  <span> Ship By: <em>{{order.shippingDate | date}}</em> </span>
+                </p>
+                <p> Total: <em>{{ orderCalcService.getOrderTotal(order) | currency }}</em></p>
+                <p>
+                    <span class="demo-2">
+                      <mat-checkbox [(ngModel)]="order.paid" align="end">
+                        paid-status: 
+                      </mat-checkbox>
+                    </span>
+                </p>
+                <div class="view-details-container">
+                  <p>view details:</p>
+                  <mat-icon class="forward-arrow"
+                            (click)="selectedOrder = orders[i]; orderIndex = i; setChildWeapons(selectedOrder.weapons)">
+                    arrow_forward
+                  </mat-icon>
+                </div>
+              </div>
+              <a class="delete-order" (click)="deleteOrder(i)"><mat-icon>delete</mat-icon></a>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+  
+      <app-order-detail [orders]="orders" 
+                        [orderIndex]="orderIndex" 
+                        [selectedOrder]="selectedOrder"
+                        >
+      </app-order-detail>
+  </div>
+
+
+

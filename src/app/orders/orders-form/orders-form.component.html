@@ -1,0 +1,59 @@
+<h1 (click)="orderCalcService.getTotalSales(clients[0], orders)">Add Order</h1>
+
+<mat-card>
+    <mat-card-content>
+      <!-- country select -->
+      <mat-form-field class="form-field field">
+          <mat-select placeholder="Select Client" 
+                      [(ngModel)]="currentOrder.client">
+            <mat-option *ngFor="let client of clients" [value]="client">
+              {{ client.country.name }}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+      <br>
+      <!-- date select -->
+      <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a shipping date"
+                 [(ngModel)]="currentOrder.shippingDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <!-- weapon select template -->
+      <div class="weapon-fields-container"
+           *ngFor="let weaponField of orderCalcService.weaponFields">
+        <mat-form-field class="leader-form-field weapon-field">
+          <mat-icon matPrefix>
+            <img src="../../../assets/icons/{{ orderCalcService.getIconPNG(weaponField.weapon) }}.png" alt="fighter jet">
+          </mat-icon>
+          <input class="weapon-input" matInput type="number" min="0" 
+                  [(ngModel)]="currentOrder.weapons[weaponField.weapon]"/>
+          <button mat-button matSuffix mat-icon-button aria-label="weaponField.weapon"
+                  *ngIf="currentOrder.weapons[weaponField.weapon]"  
+                  (click)="currentOrder.weapons[weaponField.weapon]=0">
+            <mat-icon>close</mat-icon> 
+          </button>
+        </mat-form-field>
+        <div class="price-per-unit">
+           * {{ weaponField.priceLabel }} / 
+           <span *ngIf="weaponField.weapon === 'lightArms'; else unit">Crate</span> 
+           <ng-template #unit><span>Unit</span></ng-template>
+           = {{ orderCalcService.getTotalPerWeapon(weaponField, currentOrder) }} 
+        </div>
+      </div>
+      <p class="total"><em>Total: {{ orderCalcService.getOrderTotal(currentOrder) | currency }} </em></p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="green-btn add-client-btn"
+              (click)="saveOrder()" 
+              mat-button>
+        Place Order
+      </button>
+    </mat-card-actions>
+</mat-card>
+
+
+
+
+
+  

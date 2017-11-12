@@ -1,0 +1,41 @@
+.weapon-fields-container {
+  display: flex;
+}
+
+h1 {
+  padding: 16px 0;
+  margin: 0;
+}
+
+.price-per-unit {
+  align-self: center;
+}
+
+.mat-form-field {
+  width: 90%;
+}
+
+.total{
+  font-size: 1.5rem;
+}
+
+.weapon-field {
+  width: 40%;
+  display: block;
+  input {
+    text-align: center;
+    &[placeholder] {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.add-client-btn {
+  margin: auto;
+}
+
+.mat-card-actions {
+  text-align: center;
+}
+
+

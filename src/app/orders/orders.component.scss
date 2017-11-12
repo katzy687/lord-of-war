@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  margin-top: 2rem;
+  min-width: 860px;
+  app-orders-form {
+    width: 40%;
+    padding: 0 2rem;
+  }
+  app-orders-list {
+    padding: 0 2rem 0 1rem;
+    width: 60%;
+  }
+}
+

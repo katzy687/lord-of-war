@@ -1,0 +1,43 @@
+<h1 (click)="syncLocalClients()">Clientelle</h1>
+
+<mat-grid-list gutterSize="10" cols="3" rowHeight="200px">
+  <mat-grid-tile *ngFor="let client of clients; let i = index" 
+                  colspan="1" 
+                  rowspan="1"
+                  (click)="goToOrders(i)">
+    <mat-card>
+      <mat-card-content>
+        <div class="top-container">
+          <div class="country-name">
+            <mat-card-title>{{client.country.name}}</mat-card-title>
+          </div>
+          <div class="flex-spacer"></div>
+          <div class="country-flag">
+            <img src="http://www.geonames.org/flags/x/{{ client.country.code | lowercase }}.gif" alt="country flag">
+          </div>
+        </div>
+        <div class="info-container">
+          <div class="current-leader">
+            <mat-card-subtitle>
+                Current Leader:
+            </mat-card-subtitle>
+            <em> {{ client.currentLeader }} </em>
+          </div>
+          <div class="annual-sales">
+              <mat-card-subtitle>
+                  Annual Sales:
+              </mat-card-subtitle>
+              <strong>{{ client.annualSales | currency }}</strong>
+            </div>
+        </div>
+
+        <div class="edit-buttons">
+          <a (click)="openDialog(i); $event.stopPropagation()"><mat-icon>mode_edit</mat-icon></a>
+          <a (click)="deleteClient(i); $event.stopPropagation()"><mat-icon>delete</mat-icon></a>
+        </div>  
+      </mat-card-content>
+     
+    </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+@import './variables';
+@import './mixins';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+}
+
+button {
+  outline: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: #E1F5FE;  
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+app-clients {
+  display: block;
+  height: 85%;
+}
+
+.green-btn{
+  background: #34b3a0;
+  color:#fff !important;
+  font-size:1.2rem;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.divider {
+  width: 2px;
+  margin: 6px 0;
+  background: blue;
+}
