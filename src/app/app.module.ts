@@ -25,6 +25,7 @@ import { ClientEditDialogComponent } from './clients/clients-list/client-edit-di
 import { OrderCalcService } from './orders/order-calc.service';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { OrderDetailComponent } from './orders/orders-list/order-detail/order-detail.component';
+import { ScrollTrackerDirective } from './scroll-tracker.directive';
 
 const appRoutes: Routes = [
   { path: 'clients', component: ClientsComponent },
@@ -45,7 +46,8 @@ const appRoutes: Routes = [
     OrdersFormComponent,
     ClientEditDialogComponent,
     TruncatePipe,
-    OrderDetailComponent
+    OrderDetailComponent,
+    ScrollTrackerDirective
   ],
   imports: [
     BrowserModule,
