@@ -17,7 +17,7 @@ export class OrdersFormComponent implements OnInit {
 
   constructor(
     private lsService: LocalStorageService,
-    private orderCalcService: OrderCalcService
+    public orderCalcService: OrderCalcService
   ) { }
 
   ngOnInit() {

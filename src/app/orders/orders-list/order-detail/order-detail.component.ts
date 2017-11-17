@@ -33,7 +33,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
   }
 
   trackScroll() {
-    const appOrder = document.getElementsByTagName('app-order-detail')[0];
+    const appOrder = <HTMLElement>document.getElementsByTagName('app-order-detail')[0];
     window.addEventListener('scroll', () => {
       if (pageYOffset > 300) {
         console.log(pageYOffset);
