@@ -10,7 +10,7 @@ export class CountryService {
   constructor(private http: HttpClient) { }
 
   getCountries() {
-    return this.http.get<ICountry[]>('../assets/data/countries.json');
+    return this.http.get<ICountry[]>('./assets/data/countries.json');
   }
 
 

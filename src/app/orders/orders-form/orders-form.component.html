@@ -24,7 +24,7 @@
            *ngFor="let weaponField of orderCalcService.weaponFields">
         <mat-form-field class="leader-form-field weapon-field">
           <mat-icon matPrefix>
-            <img src="../../../assets/icons/{{ orderCalcService.getIconPNG(weaponField.weapon) }}.png" alt="fighter jet">
+            <img src="./assets/icons/{{ orderCalcService.getIconPNG(weaponField.weapon) }}.png" alt="fighter jet">
           </mat-icon>
           <input class="weapon-input" matInput type="number" min="0" 
                   [(ngModel)]="currentOrder.weapons[weaponField.weapon]"/>
