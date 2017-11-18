@@ -1,6 +1,6 @@
 <h1 (click)="syncLocalClients()">Clientelle</h1>
 
-<mat-grid-list gutterSize="10" cols="3" rowHeight="200px">
+<mat-grid-list gutterSize="10" [cols]="responsiveColumns" rowHeight="200px">
   <mat-grid-tile *ngFor="let client of clients; let i = index" 
                   colspan="1" 
                   rowspan="1"

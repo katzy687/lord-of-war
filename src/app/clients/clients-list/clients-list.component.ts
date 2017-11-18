@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { LocalStorageService } from '../../local-storage.service';
 import { OrderCalcService } from '../../orders/order-calc.service';
 import { IClient } from '../../models/client';
@@ -13,17 +13,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ClientsListComponent implements OnInit {
   clients: IClient[];
+  responsiveColumns: number;
+  screenWidth: number;
 
   constructor(
     private lsService: LocalStorageService,
     private orderCalcService: OrderCalcService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private ngZone: NgZone
+  ) { 
+    this.setColumnsOnResize();
+  }
 
   ngOnInit() {
     this.syncLocalClients();
+    this.setInitialColumns();
   }
 
   syncLocalClients() {
@@ -38,6 +44,34 @@ export class ClientsListComponent implements OnInit {
 
   updateLocalStorage() {
     this.lsService.setToLocalStorage(this.lsService.clientArrKey, this.clients); 
+  }
+
+  //// ===================== setColumns ===================================
+  
+  setInitialColumns() {
+    this.screenWidth = window.innerWidth;
+    this.setColumns();
+  }
+  
+  setColumnsOnResize() {
+    window.onresize = (e) => {
+        this.ngZone.run(() => {
+            this.screenWidth = window.innerWidth;
+            this.setColumns();
+        });
+    };
+  }
+
+  setColumns() {
+    if (this.screenWidth >= 524 && this.screenWidth < 900) {
+      this.responsiveColumns = 2;
+    } else if (this.screenWidth >= 900 && this.screenWidth < 1200) {
+      this.responsiveColumns = 3;
+    } else if (this.screenWidth >= 1200) {
+      this.responsiveColumns = 4;
+    } else {
+      this.responsiveColumns = 1;
+    }
   }
 
   //// ===================== Dialog ===================================

@@ -10,6 +10,11 @@
   font-family: monospace;
 }
 
+h1 {
+  font-size: 1.2em;
+  margin-bottom: 0.2em;
+}
+
 button {
   outline: none;
 }
@@ -38,9 +43,7 @@ app-clients {
   font-size:1.2rem;
 }
 
-h1 {
-  margin-bottom: 10px;
-}
+
 
 .flex-spacer {
   flex: 1 1 auto;
@@ -54,4 +57,10 @@ h1 {
 
 .fixed {
   display: fixed !important;
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    margin-bottom: 10px;
+  }
 }

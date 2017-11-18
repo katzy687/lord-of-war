@@ -1,25 +1,18 @@
-.flex-spacer {
-  flex: 1 1 auto;
-}
-
 .active {
   background: #34b3a0;
 }
 
 .mat-toolbar {
-  display: flex;
-  align-content: space-around;
+  flex-wrap: wrap;
   justify-content: center;
-  position: relative;
-  height: 15vh;
-  width: 100vw;
   z-index: 5;
   background: #212121;
   box-sizing: border-box;
+  height: 100%;
+  max-height: 20vh;
 }
 
 .title {
-  font-size: 3rem;
   color: white;
 }
 
@@ -30,8 +23,43 @@
 .logo {
   cursor: pointer;
   outline: none;
-  height: 80%;
+  height: 50%;
   img {
     height: 100%;
+  }
+}
+
+.mat-nav-list {
+  padding: 10px;
+}
+
+@media screen and (min-width: 524px) {
+  .mat-toolbar {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  mat-toolbar {
+    // display: none !important;
+  }
+
+  .mat-toolbar {
+    display: flex;
+    align-content: space-around;
+    justify-content: space-between;
+    position: relative;
+    height: 15vh;
+    width: 100vw;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 1216px) {
+  .mat-toolbar {
+    justify-content: space-around;
   }
 }

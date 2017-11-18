@@ -77,10 +77,10 @@ export class ClientsFormComponent implements OnInit {
     const hasCopies = this.validateNewClient();
 
     if (arrIsEmpty) {
-      this.clients.push(clientCopy);
+      this.clients.unshift(clientCopy);
       return true;
     } else if (!arrIsEmpty && !hasCopies) {
-      this.clients.push(clientCopy);
+      this.clients.unshift(clientCopy);
       return true;
     } else if (hasCopies) {
       this.showWarning('Client already exists!');
