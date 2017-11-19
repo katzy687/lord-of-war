@@ -17,7 +17,7 @@ export class OrderDetailComponent implements OnInit {
   weapons;
 
   constructor(
-    private orderCalcService: OrderCalcService,
+    public orderCalcService: OrderCalcService,
     private lsService: LocalStorageService
   ) { }
 

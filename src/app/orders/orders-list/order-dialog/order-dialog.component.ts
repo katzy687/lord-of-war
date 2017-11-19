@@ -14,7 +14,7 @@ export class OrderDialogComponent implements OnInit {
   
   constructor(
     public dialogRef: MatDialogRef<OrderDialogComponent>,
-    private orderCalcService: OrderCalcService,
+    public orderCalcService: OrderCalcService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 

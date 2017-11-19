@@ -35,7 +35,7 @@ export class OrdersListComponent implements OnInit {
 
   constructor(
     private lsService: LocalStorageService,
-    private orderCalcService: OrderCalcService,
+    public orderCalcService: OrderCalcService,
     private countryService: CountryService,
     private route: ActivatedRoute,
     public dialog: MatDialog,

@@ -18,7 +18,7 @@ export class ClientsListComponent implements OnInit {
 
   constructor(
     private lsService: LocalStorageService,
-    private orderCalcService: OrderCalcService,
+    public orderCalcService: OrderCalcService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
