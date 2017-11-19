@@ -121,9 +121,10 @@ app-order-detail {
 @media screen and (min-width: 768px) {
   app-order-detail {
     display: block;
-    position: fixed;
+    position: absolute;
     right: 2%;
     width: 28%;
+    // top: 433px;
   }
 
   .mat-card {

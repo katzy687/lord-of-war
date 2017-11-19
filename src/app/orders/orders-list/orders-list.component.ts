@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
 import { IOrder } from '../../models/order';
 import { IClient } from '../../models/client';
 import { LocalStorageService } from '../../local-storage.service';
@@ -15,8 +15,9 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss']
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent implements OnInit, AfterViewInit {
   @ViewChild(OrderDetailComponent) private detailComponent: OrderDetailComponent;
+  @ViewChild('detailRef', { read: ElementRef }) detailRef: ElementRef;
   clients: IClient[];
   orders: IOrder[];
   orderIndex: number;
@@ -31,7 +32,8 @@ export class OrdersListComponent implements OnInit {
   controlBtns = ['All Orders', 'Unpaid', 'Paid'];
   activeBtn = 'btn0';
   screenWidth: number;
-  
+  detailOffset: number;
+
 
   constructor(
     private lsService: LocalStorageService,
@@ -40,10 +42,9 @@ export class OrdersListComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
-    private ngZone: NgZone
-  ) { 
-    // this.monitorScreenSize();
-  }
+    private ngZone: NgZone,
+    private renderer: Renderer2
+  ) { }
 
   ngOnInit() {
     this.syncLocalOrders();
@@ -56,6 +57,12 @@ export class OrdersListComponent implements OnInit {
     this.monitorScreenSize();
   }
 
+  ngAfterViewInit() {
+    this.detailOffset = this.detailRef.nativeElement.offsetTop;
+    console.log(this.detailOffset);
+
+  }
+
 
   setChildWeapons() {
     this.detailComponent.weaponsObjectToArr(this.selectedOrder.weapons);
@@ -63,6 +70,15 @@ export class OrdersListComponent implements OnInit {
 
   initFormControl() {
     this.myControl = new FormControl(this.countryParam);
+  }
+
+  syncLocalOrders() {
+    this.lsService.orders.subscribe(data => this.orders = data);
+  }
+
+  getClients() {
+    this.clients = this.lsService.getFromLocalStorage(this.lsService.clientArrKey);
+    console.log(this.clients);
   }
 
   initQueryParam() {
@@ -86,13 +102,21 @@ export class OrdersListComponent implements OnInit {
     this.setChildWeapons();
   }
 
-  syncLocalOrders() {
-    this.lsService.orders.subscribe(data => this.orders = data);
+  setDetailHeight(e) {
+    const offsetTop = this.getOrderOffsetTop(e);
+    const nativeEl = this.detailRef.nativeElement;
+    console.log(nativeEl);
+
+    this.renderer.setStyle(this.detailRef.nativeElement, 'top', `${offsetTop}px`);
+
+
   }
 
-  getClients() {
-    this.clients = this.lsService.getFromLocalStorage(this.lsService.clientArrKey);
-    console.log(this.clients);
+  getOrderOffsetTop(e) {
+    const targetOrder = e.target;
+    const orderOffset = targetOrder.closest('.mat-card-wrapper').offsetTop;
+    console.log(orderOffset);
+    return orderOffset;
   }
 
   initSelectedOrder() {
@@ -102,7 +126,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   //// ===================== filter by paid status ===================================
-  
+
 
   setActiveBtn(index) {
     this.activeBtn = 'btn' + index;
@@ -136,7 +160,7 @@ export class OrdersListComponent implements OnInit {
     const countryMatchesForm = this.orders[index].client.country.name === this.myControl.value;
     if (this.myControl.value === null) {
       return true;
-    } else if (typeof(this.myControl.value) === 'string' && this.myControl.value.length === 0) {
+    } else if (typeof (this.myControl.value) === 'string' && this.myControl.value.length === 0) {
       return true;
     } else if (countryMatchesForm) {
       return true;
@@ -146,7 +170,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   //// ===================== delete order ===================================
-  
+
   deleteOrder(index) {
     this.orders.splice(index, 1);
     console.log(this.clients);
@@ -154,23 +178,22 @@ export class OrdersListComponent implements OnInit {
   }
 
   updateLocalStorage() {
-    this.lsService.setToLocalStorage(this.lsService.orderArrKey, this.orders); 
+    this.lsService.setToLocalStorage(this.lsService.orderArrKey, this.orders);
   }
 
   //// ===================== Dialogue ===================================
-  
+
   openDialog(index): void {
 
-    if (this.screenWidth >= 768) { 
-      console.log(this.screenWidth);
-      return; 
+    if (this.screenWidth >= 768) {
+      return;
     }
-    
+
     const dialogRef = this.dialog.open(OrderDialogComponent, {
       width: '500px',
       data: { selectedOrder: this.selectedOrder }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('dialog closed homie');
       this.clients[index].currentLeader = result;
@@ -185,8 +208,8 @@ export class OrdersListComponent implements OnInit {
   monitorScreenSize() {
     window.onresize = (e) => {
       this.ngZone.run(() => {
-          this.screenWidth = window.innerWidth;
+        this.screenWidth = window.innerWidth;
       });
-  };
+    };
   }
 } // end of component

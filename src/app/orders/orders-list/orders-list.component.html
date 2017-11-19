@@ -62,7 +62,8 @@
                             (click)="selectedOrder = orders[i]; 
                                      orderIndex = i; 
                                      setChildWeapons();
-                                     openDialog(i)">
+                                     openDialog(i);
+                                     setDetailHeight($event)">
                     arrow_forward
                   </mat-icon>
                 </div>
@@ -73,7 +74,8 @@
         </div>
       </div>
   
-      <app-order-detail [orders]="orders" 
+      <app-order-detail #detailRef 
+                        [orders]="orders" 
                         [orderIndex]="orderIndex" 
                         [selectedOrder]="selectedOrder"
                         >
