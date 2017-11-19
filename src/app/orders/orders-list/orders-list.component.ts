@@ -64,7 +64,9 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
 
 
   setChildWeapons() {
-    this.detailComponent.weaponsObjectToArr(this.selectedOrder.weapons);
+    if (this.selectedOrder) {
+      this.detailComponent.weaponsObjectToArr(this.selectedOrder.weapons);
+    }
   }
 
   initFormControl() {

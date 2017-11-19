@@ -36,7 +36,7 @@
         <div class="mat-card-wrapper"
              *ngFor="let order of orders; let i = index">
           <mat-card class="order-card"
-                     *ngIf="filterPaidStatus(i) && filterByCountry(i)">
+                    *ngIf="filterPaidStatus(i) && filterByCountry(i); else noResult">
             <mat-card-content>
               <mat-icon>folder</mat-icon>
               <div class="order-info">
@@ -73,6 +73,7 @@
               <a class="delete-order" (click)="deleteOrder(i)"><mat-icon>delete</mat-icon></a>
             </mat-card-content>
           </mat-card>
+          <ng-template #noResult>There are no orders for your current filters</ng-template>
         </div>
       </div>
   
