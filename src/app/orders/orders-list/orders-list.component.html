@@ -73,9 +73,10 @@
               <a class="delete-order" (click)="deleteOrder(i)"><mat-icon>delete</mat-icon></a>
             </mat-card-content>
           </mat-card>
-          <ng-template #noResult>There are no orders for your current filters</ng-template>
         </div>
       </div>
+      
+      <ng-template #noResult>There are no orders for your current filters</ng-template>
   
       <app-order-detail #detailRef 
                         [orders]="orders" 
