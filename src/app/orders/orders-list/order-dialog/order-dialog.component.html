@@ -1,0 +1,17 @@
+<div class="country-flag">
+    <img src="http://www.geonames.org/flags/x/{{ data.selectedOrder.client.country.code | lowercase }}.gif" alt="country flag">
+</div>
+<div class="country-name">
+  <mat-card-title>{{data.selectedOrder.client.country.name}}</mat-card-title>
+  <mat-card-subtitle class="leader">Attn: {{ data.selectedOrder.client.currentLeader }}</mat-card-subtitle>
+</div>
+
+<br>
+<h3 class="order-details">Order Details</h3>
+<mat-list>
+  <mat-list-item *ngFor="let weapon of weapons">
+    {{weapon[0]}}: ({{ weapon[1] }})
+  </mat-list-item>
+</mat-list>
+<mat-divider></mat-divider>
+<h3>Total: {{ orderCalcService.getOrderTotal(data.selectedOrder) | currency}}</h3>

@@ -6,13 +6,6 @@
   display: flex;
   width: 100%;
   height: 40%;
-  // padding: 0.5rem;
-  .country-flag {
-    width: 40%;
-    img {
-      width: 100%;
-    }
-  }
 }
 
 .leader {
@@ -23,5 +16,14 @@
   position: absolute;
   bottom: 1rem;
   right: 2rem;
+}
+
+.country-flag {
+  width: 50%;
+  margin: auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 

@@ -1,15 +1,13 @@
 <mat-card *ngIf="selectedOrder" id="order-detail-card">
   <mat-card-content>
-    <div class="top-container">
+      <div class="country-flag">
+          <img src="http://www.geonames.org/flags/x/{{ selectedOrder.client.country.code | lowercase }}.gif" alt="country flag">
+      </div>
       <div class="country-name">
         <mat-card-title>{{selectedOrder.client.country.name}}</mat-card-title>
         <mat-card-subtitle class="leader">Attn: {{ selectedOrder.client.currentLeader }}</mat-card-subtitle>
       </div>
-      <div class="flex-spacer"></div>
-      <div class="country-flag">
-        <img src="http://www.geonames.org/flags/x/{{ selectedOrder.client.country.code | lowercase }}.gif" alt="country flag">
-      </div>
-    </div>
+      
     <br>
     <h3 class="order-details">Order Details</h3>
     <mat-list>
@@ -20,7 +18,5 @@
     </mat-list>
     <mat-divider></mat-divider>
     <h3>Total: {{ orderCalcService.getOrderTotal(selectedOrder) | currency}}</h3>
-    
-    
   </mat-card-content>
 </mat-card>

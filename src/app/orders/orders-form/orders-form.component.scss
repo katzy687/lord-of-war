@@ -19,6 +19,10 @@ h1 {
   font-size: 1.5rem;
 }
 
+.ppu-total {
+  display: none;
+}
+
 .weapon-field {
   width: 40%;
   display: block;
@@ -39,3 +43,8 @@ h1 {
 }
 
 
+@media screen and (min-width: 768px) {
+  .ppu-total {
+    display: inline;
+  }
+}

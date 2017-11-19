@@ -52,15 +52,22 @@ export class OrdersFormComponent implements OnInit {
   //// ===================== Save Order ===================================
 
   saveOrder() {
-    this.pushOrderToList();
+    this.unshiftOrderToList();
     this.updateClientAnnualSales();
     this.saveOrdersToLS();
     this.saveClientsToLS();
     this.updateServiceClients();
   }
 
-  pushOrderToList() {
-    this.orders.push(this.currentOrder);
+  unshiftOrderToList() {
+    const orderDeepCopy = this.prepCurrentOrder();
+    this.orders.unshift(this.currentOrder);
+    this.initCurrentOrder();
+  }
+
+  prepCurrentOrder() {
+    const orderDeepCopy = _.cloneDeep(this.currentOrder);
+    return orderDeepCopy;
   }
 
   saveOrdersToLS() {
@@ -76,9 +83,9 @@ export class OrdersFormComponent implements OnInit {
   }
 
   updateClientAnnualSales() {
-    const lastPushedClient = _.last(this.orders).client;
-    const totalSales = this.orderCalcService.getTotalSales(lastPushedClient, this.orders );
-    const targetClientIndex = this.clients.indexOf(lastPushedClient);
+    const lastUnshiftedClient = _.first(this.orders).client;
+    const totalSales = this.orderCalcService.getTotalSales(lastUnshiftedClient, this.orders );
+    const targetClientIndex = this.clients.indexOf(lastUnshiftedClient);
     console.log('totalSales', totalSales);
     console.log('targetClientIndex', targetClientIndex);
 

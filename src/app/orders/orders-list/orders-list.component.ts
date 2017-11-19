@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { IOrder } from '../../models/order';
 import { IClient } from '../../models/client';
 import { LocalStorageService } from '../../local-storage.service';
@@ -7,13 +7,15 @@ import { OrderCalcService } from '../order-calc.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-orders-list',
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss']
 })
-export class OrdersListComponent implements OnInit, AfterViewInit {
+export class OrdersListComponent implements OnInit {
   @ViewChild(OrderDetailComponent) private detailComponent: OrderDetailComponent;
   clients: IClient[];
   orders: IOrder[];
@@ -28,14 +30,20 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
 
   controlBtns = ['All Orders', 'Unpaid', 'Paid'];
   activeBtn = 'btn0';
+  screenWidth: number;
+  
 
   constructor(
     private lsService: LocalStorageService,
     private orderCalcService: OrderCalcService,
     private countryService: CountryService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    public dialog: MatDialog,
+    private router: Router,
+    private ngZone: NgZone
+  ) { 
+    // this.monitorScreenSize();
+  }
 
   ngOnInit() {
     this.syncLocalOrders();
@@ -44,10 +52,10 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
     this.initSelectedOrder();
     this.initQueryParam();
     this.initFormControl();
+    this.setInitialScreenSize();
+    this.monitorScreenSize();
   }
 
-  ngAfterViewInit() {
-  }
 
   setChildWeapons() {
     this.detailComponent.weaponsObjectToArr(this.selectedOrder.weapons);
@@ -64,9 +72,18 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
         this.countryParam = params['countryName'] || null;
         if (this.countryParam) {
           this.filterValue = this.countryParam;
+          this.setFirstOrderToDetail(this.countryParam);
         }
         console.log('countryParam', this.countryParam);
       });
+  }
+
+  setFirstOrderToDetail(country) {
+    console.log('------orders below');
+    console.log(this.orders);
+    const firstMatchingIndex = this.orders.findIndex(order => order.client.country.name === country);
+    this.selectedOrder = this.orders[firstMatchingIndex];
+    this.setChildWeapons();
   }
 
   syncLocalOrders() {
@@ -140,4 +157,36 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
     this.lsService.setToLocalStorage(this.lsService.orderArrKey, this.orders); 
   }
 
+  //// ===================== Dialogue ===================================
+  
+  openDialog(index): void {
+
+    if (this.screenWidth >= 768) { 
+      console.log(this.screenWidth);
+      return; 
+    }
+    
+    const dialogRef = this.dialog.open(OrderDialogComponent, {
+      width: '500px',
+      data: { selectedOrder: this.selectedOrder }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('dialog closed homie');
+      this.clients[index].currentLeader = result;
+      // this.updateLocalStorage();
+    });
+  }
+
+  setInitialScreenSize() {
+    this.screenWidth = window.innerWidth;
+  }
+
+  monitorScreenSize() {
+    window.onresize = (e) => {
+      this.ngZone.run(() => {
+          this.screenWidth = window.innerWidth;
+      });
+  };
+  }
 } // end of component
