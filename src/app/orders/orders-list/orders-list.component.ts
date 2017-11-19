@@ -60,7 +60,6 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.detailOffset = this.detailRef.nativeElement.offsetTop;
     console.log(this.detailOffset);
-
   }
 
 
@@ -75,6 +74,7 @@ export class OrdersListComponent implements OnInit, AfterViewInit {
   syncLocalOrders() {
     this.lsService.orders.subscribe(data => this.orders = data);
   }
+
 
   getClients() {
     this.clients = this.lsService.getFromLocalStorage(this.lsService.clientArrKey);

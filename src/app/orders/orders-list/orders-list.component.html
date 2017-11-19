@@ -51,7 +51,9 @@
                 <p> Total: <em>{{ orderCalcService.getOrderTotal(order) | currency }}</em></p>
                 <p>
                     <span class="demo-2">
-                      <mat-checkbox [(ngModel)]="order.paid" align="end">
+                      <mat-checkbox [(ngModel)]="order.paid" 
+                                    (ngModelChange)="updateLocalStorage()"
+                                    align="end">
                         paid-status: 
                       </mat-checkbox>
                     </span>
